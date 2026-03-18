@@ -1486,7 +1486,7 @@ function updateCascade(id) {
     const arrow = i < s.cascade.length - 1 ? '<span class="cascade-arrow">&rarr;</span>' : '';
     return `<span class="cascade-step ${step.type}">${step.text}</span>${arrow}`;
   }).join('');
-  document.getElementById('cascadeExplain').textContent = s.explain;
+  document.getElementById('cascadeExplain').innerHTML = s.explain;
 }
 
 function updateControl(id) {
