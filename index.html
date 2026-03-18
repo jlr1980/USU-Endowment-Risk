@@ -632,18 +632,53 @@
 </style>
 </head>
 <body>
+<!-- PASSWORD GATE -->
+<div id="pw-gate" style="position:fixed;inset:0;z-index:9999;background:#00263A;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;">
+  <div style="color:white;font-family:'IBM Plex Sans',sans-serif;font-size:22px;font-weight:500;letter-spacing:0.04em;">USU Endowment Risk Assessment</div>
+  <div style="color:rgba(255,255,255,0.6);font-size:13px;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Independent Analysis &mdash; Restricted Access</div>
+  <div style="display:flex;gap:10px;align-items:center;">
+    <input id="pw-input" type="password" placeholder="Enter password" autofocus
+      style="padding:10px 16px;font-size:15px;border:1px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.08);color:white;border-radius:4px;outline:none;font-family:'IBM Plex Sans',sans-serif;width:220px;"
+      onkeydown="if(event.key==='Enter')checkPW()">
+    <button onclick="checkPW()"
+      style="padding:10px 22px;background:#D4A843;color:#00263A;border:none;border-radius:4px;font-size:14px;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;letter-spacing:0.03em;">Enter</button>
+  </div>
+  <div id="pw-error" style="color:#e87878;font-size:13px;height:18px;"></div>
+</div>
+<script>
+function checkPW(){
+  var v=document.getElementById('pw-input').value;
+  if(v==='Aggies'){
+    document.getElementById('pw-gate').style.display='none';
+    sessionStorage.setItem('usu_auth','1');
+  } else {
+    var e=document.getElementById('pw-error');
+    e.textContent='Incorrect password.';
+    document.getElementById('pw-input').value='';
+    document.getElementById('pw-input').focus();
+    setTimeout(function(){e.textContent='';},2000);
+  }
+}
+// Auto-pass if already authenticated this session
+if(sessionStorage.getItem('usu_auth')==='1'){
+  document.addEventListener('DOMContentLoaded',function(){
+    var g=document.getElementById('pw-gate');
+    if(g) g.style.display='none';
+  });
+}
+</script>
+
 
 <!-- ══════════════ HEADER ══════════════ -->
 <header class="site-header">
   <div class="header-top">
     <div class="header-brand">
-      <img src="data:image/png;base64,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" alt="Utah State University" style="height:44px;width:auto;">
       <div class="header-text">
-        <h1>Endowment Risk Assessment</h1>
-        <div class="subtitle">Utah State University Foundation</div>
+        <h1>USU Endowment Risk Assessment</h1>
+        <div class="subtitle">Independent Analysis &mdash; Jeff Reece</div>
       </div>
     </div>
-    <div class="header-badge">Independent Analysis</div>
+    <div class="header-badge">Not affiliated with USU</div>
   </div>
   <nav class="tab-nav">
     <button class="tab-btn active" data-tab="overview">Financial Profile</button>
@@ -738,6 +773,7 @@
   </p>
 
   <!-- Scenario Selector -->
+  <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">(1) Choose Stress Level</div>
   <div class="scenario-cards">
     <div class="scenario-card active" data-scenario="baseline" onclick="selectScenario('baseline')">
       <div class="sc-indicator" style="background:var(--safe)"></div>
@@ -768,6 +804,7 @@
   <!-- Cascade Diagram -->
   <div class="card">
     <div class="card-title">How This Scenario Develops</div>
+    <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;font-style:italic;">Return drag estimates: Moderate Stress mean return of 4.5% calibrated to insurance-retreat and fiscal-pressure literature (Swiss Re sigma reports, IMF Art. IV consultations). Severe Stress 0.5% calibrated to correlated-shock historical analogues (FY2009 real return, post-Soviet transition data). Structural Breakdown -4.0% calibrated to NGFS tail-risk scenario C and Norway central bank severe-stress projections. All parameters adjustable above.</div>
     <div id="cascadeDisplay" class="cascade-flow">
       <span class="cascade-step trigger">Normal market conditions</span>
       <span class="cascade-arrow">&rarr;</span>
@@ -781,6 +818,7 @@
   </div>
 
   <!-- Controls -->
+  <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin:20px 0 8px;">(2) Adjust Parameters</div>
   <div class="controls-panel">
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;">
       <div class="control-group">
@@ -819,7 +857,7 @@
           <span class="tooltip-wrap">
             <span class="info-btn" onclick="this.parentElement.classList.toggle('active')">i</span>
             <div class="tooltip-box">
-              <div class="tooltip-def">Assumed annual inflation rate for real purchasing power calculation.</div>
+              <div class="tooltip-def">Assumed annual inflation rate for real purchasing power calculation. Note: this model holds inflation constant for the full projection horizon. In stress scenarios beyond 5 years, actual inflation would likely ramp upward, meaning these results understate real purchasing power erosion. This is a conservative assumption that strengthens rather than weakens the core finding.</div>
               <div class="tooltip-interp" id="tip-inflation">At 3.0%, the endowment needs to earn at least 8.5% (spending + inflation) just to stay flat in real terms.</div>
             </div>
           </span>
@@ -862,7 +900,7 @@
     </div>
 
     <div style="margin-top:16px;display:flex;align-items:center;gap:12px;">
-      <button class="run-btn" onclick="runModel()">Run Stress Test</button>
+      <span style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-right:4px;">(3)</span><button class="run-btn" onclick="runModel()">Run Scenario</button>
       <span class="running-indicator" id="runningMsg">Running simulations...</span>
       <div class="compare-toggle" style="margin-left:auto;">
         <input type="checkbox" id="compareAll" onchange="toggleCompare()">
@@ -929,39 +967,29 @@
       <p><strong>Re:</strong> Endowment Strategy and Structural Risk at Utah State University</p>
     </div>
 
-    <p>Dear Members of the USU Foundation Board,</p>
+    <p>Dear Scott,</p>
 
-    <p>I'm writing to you as a systems scientist, a member of the USU faculty, and as someone who cares deeply about Utah State University. Trained as a physicist, for the past twenty years my work has been in global change, regenerative systems, and civilizational futures. In this work I look at trends in the full suite of ecological and social challenges we face, implications for human sustainability and vibrancy, and authentic response paths.</p>
+    <p>I graduated from Utah State in 2004 with a degree in economics. I have spent the years since working in finance and business at an international level. I am writing because I care about this institution and the communities it serves, and because I believe the question this letter raises deserves to be put in front of the people responsible for answering it.</p>
 
-    <p>Over the past two years, and as a part of this work, I've developed a close collaboration with Jeff Reece, a graduate of USU's Huntsman School (Economics, 2004) with a successful international career in business and finance. As a result of this collaboration, Jeff's interests and outlook has evolved significantly. Among other things, he has been working to bring the world of finance into alignment with the current state of civilizational futures understanding. Together with colleagues, he has recently been engaged in systemic risk modeling, with specific purpose of making systemic risks to our society and institutions visible, testable, and explicit.</p>
+    <p>Over the past two years, working with colleagues in the United States and internationally, I have been developing a systemic risk modeling framework with the specific aim of making cascading institutional risks visible, testable, and adjustable. The results, applied to USU's own financial record, are striking enough that I feel a responsibility to share them directly.</p>
 
-    <p>His results have been quite stunning.</p>
-
-    <p>Reviewing these results with Jeff recently, I asked if he would undertake a case study of Utah State University specifically. With deep ties to USU, Jeff agreed immediately. These results are deeply concerning and we both feel a responsibility to share them with you, the entity guiding the management of USU's endowment.</p>
-
-    <p>To be clear, this is not a solicitation. We're not selling anything. We are aware that letters raising concerns about investment strategy can read as alarmist. We have tried to keep this one grounded in USU's own financial record. We believe the data speaks clearly enough that it warrants a conversation.</p>
-
-    <p>I hope you will take the time to take this in.</p>
-
-    <p>Sincerely,</p>
-    <p><strong>Robert Davies</strong><br>
-    Associate Professor, USU Dep't of Physics</p>
+    <p>This is not a solicitation. I am not selling anything. I have tried to keep this analysis grounded in USU's own audited financial record. I believe the data speaks clearly enough that it warrants a conversation.</p>
 
     <div style="margin:40px 0;border-top:2px solid var(--aggie-blue);padding-top:32px;">
-      <p style="font-size:14px;font-weight:600;font-family:var(--sans);color:var(--aggie-blue);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:20px;">Memo For Record &mdash; March, 2026</p>
+      <p style="font-size:14px;font-weight:600;font-family:var(--sans);color:var(--aggie-blue);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:20px;">Analysis &mdash; March 2026</p>
     </div>
 
     <h2>I. Introduction</h2>
     <p>The world's leading institutional risk organizations, including Swiss Re, the IMF, the World Bank, the World Economic Forum, and the V-Dem Institute, have spent the past several years documenting a convergence of structural stresses across insurance markets, sovereign debt, food systems, democratic governance, and energy. Taken individually, each trend is concerning. Taken together, and modeled with attention to how they interact under stress, the implications for institutions like USU are severe. This memo presents that analysis, grounded in USU's own 15-year financial record.</p>
 
-    <p>The analysis draws on that body of institutional research and on a scenario modeling framework built and tested with financial professionals and academics working in systemic risk. We have also constructed a tool that makes every underlying assumption transparent and adjustable, so that anyone can interrogate the calibration directly rather than take our word for it.</p>
+    <p>The analysis draws on that body of institutional research and on a scenario modeling framework built and tested with financial professionals and academics working in systemic risk. I have also built a tool that makes every underlying assumption transparent and adjustable, so that anyone can interrogate the calibration directly rather than take my word for it.</p>
 
-    <p>We anticipate that a memo raising concerns about investment strategy will generate predictable objections. We have tried to address the most important ones directly in Section VII, using USU's own audited record as the evidentiary base.</p>
+    <p>I anticipate that a memo raising concerns about investment strategy will generate predictable objections. I have tried to address the most important ones directly in Section VII, using USU's own audited record as the evidentiary base.</p>
 
     <h2>Top Level Conclusion</h2>
-    <p>We find that the structural conditions now building across energy, insurance, food systems, and sovereign debt markets are, in several respects, more severe than those that produced the FY2009 moment, and the assumptions embedded in USU's current endowment strategy do not appear to account for correlated multi-system disruption of that kind.</p>
+    <p>The analysis finds that the structural conditions now building across energy, insurance, food systems, and sovereign debt markets are, in several respects, more severe than those that produced the FY2009 moment, and the assumptions embedded in USU's current endowment strategy do not appear to account for correlated multi-system disruption of that kind.</p>
 
-    <p>USU's endowment strategy assumes its three primary revenue sources, investment returns, state appropriations, and private giving, behave independently under stress. They do not. In FY2009, all three compressed simultaneously. The structural conditions now building are more severe than those that produced that moment. Under current calibration, the conventional endowment strategy produces a median Year 10 outcome of $27M against a $1,390M target. The analysis that follows explains why, and what a different path looks like.</p>
+    <p>USU's endowment strategy assumes its three primary revenue sources, investment returns, state appropriations, and private giving, behave independently under stress. They do not. In FY2009, all three compressed simultaneously. The structural conditions now building are more severe than those that produced that moment. Under current calibration, the conventional endowment strategy produces a median Year 10 outcome of $27M against a $1,390M target. The sections that follow explain why, and what a different path looks like.</p>
 
     <h2>II. Where USU Stands Financially</h2>
     <p>The endowment is well-managed by conventional measures:</p>
@@ -975,7 +1003,7 @@
 
     <p>Under Policy 5000.4.2, sustaining real purchasing power while meeting distribution commitments requires approximately 8.5% nominal annual return. Over 10 years, that compounds to a target endowment value of $1,390M.</p>
 
-    <p>USU's audited financial reports, which we have reviewed across 15 years, reveal something the headline numbers do not: a structural financial position that is more fragile than it appears, and that becomes acutely exposed under the conditions this letter describes.</p>
+    <p>USU's audited financial reports, reviewed across 15 years, reveal something the headline numbers do not: a structural financial position that is more fragile than it appears, and that becomes acutely exposed under the conditions this letter describes.</p>
 
     <h2>III. The Structural Picture USU's Records Show</h2>
     <p>Across every year from FY2009 to FY2021, USU has run an operating deficit of between $185M and $307M annually. That deficit has widened every year without exception, growing 41% over the period. USU covers it through two non-operating sources: state appropriations and investment returns. Those two sources account for roughly 90% of what keeps the institution solvent on an annual basis.</p>
@@ -1033,7 +1061,7 @@
     <p>The conditions most likely to strain the endowment are the same conditions that most directly threaten what USU is for. A fiduciary committee should know whether those two things are on a collision course.</p>
 
     <h2>VII. Questions Worth Asking Before We Meet</h2>
-    <p>We expect several responses to this letter. We want to address the most predictable ones directly, using USU's own record.</p>
+    <p>I expect several responses to this letter. The most predictable ones are addressed directly below, using USU's own record.</p>
 
     <p><strong>"The FY2024 return was 10%, beating benchmark."</strong></p>
     <p>One strong year does not alter the structural picture. The endowment earned negative investment income in FY2009. It earned $15M in FY2012, an implied return of roughly 5.4% on invested assets. The range across the years we have data for runs from -$1.4M to +$74M. A strategy that requires 8.5% every year for 10 years cannot tolerate that kind of volatility. The question is not whether the endowment can have a good year. It is whether the strategy is built for a bad decade.</p>
@@ -1042,13 +1070,13 @@
     <p>USU survived COVID because of federal relief funding, not because the portfolio absorbed the shock. Investment income fell 38% in FY2020. Operating losses widened. The federal backstop papered over the correlated revenue collapse. It is not a replicable mechanism. The next shock will not come with a similar fiscal response.</p>
 
     <p><strong>"Our investment advisors run stress tests."</strong></p>
-    <p>Standard stress tests model historical shocks in isolation: a 2008-style market event, a 1970s inflation episode. They do not model simultaneous multi-system disruption in which conventional correlation assumptions break down. That is a different analytical problem. We would welcome the chance to compare the methodology your advisors use against the framework we have built, specifically on the question of correlated failure across investment returns, state revenues, and private giving.</p>
+    <p>Standard stress tests model historical shocks in isolation: a 2008-style market event, a 1970s inflation episode. They do not model simultaneous multi-system disruption in which conventional correlation assumptions break down. That is a different analytical problem. I would welcome the chance to compare the methodology your advisors use against the framework built here, specifically on the question of correlated failure across investment returns, state revenues, and private giving.</p>
 
     <p><strong>"Alternative investments are speculative."</strong></p>
     <p>The approach described below is not speculative. It is investment in physical and institutional infrastructure that holds value because it produces things people need regardless of financial market conditions: food, water, energy, local supply chain capacity. The speculative position is the assumption that conventional assets will perform as they have historically across conditions that are structurally different from the historical period.</p>
 
     <h2>VIII. What a Different Path Looks Like</h2>
-    <p>We are not suggesting USU abandon its investment strategy. We are suggesting there is a category of asset allocation worth understanding, one built around resilience in an unstable environment rather than return maximization in a stable one.</p>
+    <p>I am not suggesting USU abandon its investment strategy. I am suggesting there is a category of asset allocation worth understanding, one built around resilience in an unstable environment rather than return maximization in a stable one.</p>
 
     <p>In a world where the conditions described above are materializing, the assets most likely to hold value are tied to things people actually need: local food systems, water infrastructure, community energy, regional supply chains, and institutional capacity to coordinate around shared problems. These are not exotic investments. They are the physical and social substrate that conventional finance treats as background, but which actually determines whether any other asset class continues to function.</p>
 
@@ -1063,7 +1091,7 @@
 
     <p>The model shows this orientation producing a median Year 10 outcome of $684M under the USU Continuity preset. Not the $1,390M target, but dramatically better than $27M, and achieved by investing in the same systems USU's land-grant mission exists to strengthen. The endowment and the mission would be pulling in the same direction.</p>
 
-    <p>We recognize this raises implementation questions that require exactly the expertise your committee has. We are not here with a finished product. We are here with a direction, a logic, and deep systems analysis.</p>
+    <p>I recognize this raises implementation questions that require exactly the expertise your committee has. I am not here with a finished product. I am here with a direction, a logic, and deep systems analysis.</p>
 
     <h2>IX. What We Are Asking For</h2>
     <p>Three things, in sequence.</p>
@@ -1072,28 +1100,22 @@
 
     <p><strong>Second:</strong> ask your investment advisors to run a stress test that models simultaneous multi-system disruption: not a single-variable historical shock, but a scenario in which investment returns, state appropriations, and private giving compress at the same time. If they have done that work, we would welcome the chance to compare notes. If they have not, it is worth asking why, given that USU's FY2009 record shows exactly that dynamic.</p>
 
-    <p><strong>Third:</strong> sit down with us. We will bring the full analysis and the underlying research. We are not here to tell the committee what to do. We are here because we think the question deserves to be asked in front of the people responsible for answering it. We want to help you prepare for what the evidence tells us is coming.</p>
+    <p><strong>Third:</strong> meet. I will bring the full analysis and the underlying research. I am not here to tell the committee what to do. I am here because I think the question deserves to be asked in front of the people responsible for answering it.</p>
 
-    <p>This university has served this community for well over a century. The land-grant mission is not abstract. It is the reason those of us in Cache Valley have access to research and extension knowledge that makes a difference in a hard year. We want that to continue. The question this letter raises is whether the endowment strategy currently in place is built to make that possible across the conditions most likely to test it.</p>
+    <p>This university has served this community for well over a century. The land-grant mission is not abstract. It is the reason people in Cache Valley have access to research and extension knowledge that makes a difference in a hard year. We want that to continue. The question this analysis raises is whether the endowment strategy currently in place is built to make that possible across the conditions most likely to test it.</p>
 
-    <p>We believe it deserves a serious look. We hope you agree. We are here to assist in any way we can.</p>
+    <p>I believe it deserves a serious look. I hope you agree.</p>
 
     <div class="sig-block">
       <p>Respectfully,</p>
-      <br>
-      <p><strong>Robert Davies</strong><br>
-      Professor of Physics<br>
-      USU Dep't of Physics</p>
       <br>
       <p><strong>Jeff Reece</strong><br>
       B.S. Economics, Utah State University, 2004</p>
     </div>
 
     <div style="margin-top:40px;padding-top:24px;border-top:1px solid #ddd;">
-      <h2>About the Authors</h2>
-      <p>Robert Davies is a professor of physics at Utah State University. His work over the past twenty years has focused on complex adaptive systems, global change, regenerative systems, and human futures. He is a founding collaborator of the Crossroads Project, an initiative based at USU exploring the intersection of science, society, and civilizational trajectory.</p>
-      <p>Jeff Reece is a graduate of Utah State University's Huntsman School of Business (2004, economics).</p>
-      <p>Davies and Reece have been working together for the past two years alongside colleagues in the United States and internationally, as observable trends in ecological, institutional, and financial systems have raised mounting concerns about cascading systemic risk. Their work draws on data and analysis from some of the world's foremost risk assessment organizations, and on a structured Monte Carlo modeling framework built to make civilizational risk visible, testable, and adjustable by those who disagree with its assumptions.</p>
+      <h2>About the Author</h2>
+      <p>Jeff Reece is a graduate of Utah State University (Economics, 2004) with a career in international business and finance. Over the past two years he has been working alongside colleagues in the United States and internationally on systemic risk modeling, with the aim of making cascading institutional risks visible, testable, and explicit. The modeling framework draws on data and analysis from leading risk assessment organizations and on a structured Monte Carlo simulation framework designed to be interrogated directly by those who disagree with its assumptions.</p>
     </div>
   </div>
 </section>
@@ -1152,7 +1174,7 @@
 </main>
 
 <footer class="site-footer">
-  Independent analysis prepared by Robert Davies and Jeff Reece. Not affiliated with USU Foundation investment management.<br>
+  Independent analysis prepared by Jeff Reece. Not affiliated with USU Foundation investment management.<br>
   Data sources: USU Annual Financial Reports (FY2009-FY2023), NACUBO, NGFS, NBIM, GIC, Potsdam Institute, Federal Reserve.<br>
   Full technical model: <a href="https://jlr1980.github.io/Systemic-Risk-Model/" target="_blank">jlr1980.github.io/Systemic-Risk-Model</a>
 </footer>
@@ -1191,7 +1213,7 @@ const SCENARIOS = {
       { text: 'Insurance markets function', type: 'trigger' },
       { text: 'Endowment grows at target rate', type: 'impact' }
     ],
-    explain: 'This is the world the current investment policy assumes. Insurance markets function, governance is stable, supply chains operate, and returns follow historical distributions. The endowment meets its 8.5% required return and maintains real purchasing power indefinitely.'
+    explain: '<strong>This is the world the current investment policy assumes.</strong> Insurance markets function, governance is stable, supply chains operate, and returns follow historical distributions. The endowment meets its 8.5% required return and maintains real purchasing power indefinitely.'
   },
   moderate: {
     name: 'Moderate Stress',
@@ -1206,7 +1228,7 @@ const SCENARIOS = {
       { text: 'Return drag of 2-4%', type: 'impact' },
       { text: 'Endowment purchasing power erodes', type: 'impact' }
     ],
-    explain: 'Climate-related costs are rising faster than historical trends. Insurance companies are repricing or withdrawing from exposed regions, creating ripple effects through property values and municipal budgets. State funding for public universities comes under pressure as fiscal demands grow. Returns average 4-5% instead of 8-9%, which sounds manageable until you account for the 5.5% spending draw and 3% inflation. The endowment is being consumed slowly.'
+    explain: '<strong>Climate-related costs are rising faster than historical trends.</strong> Insurance companies are repricing or withdrawing from exposed regions, creating ripple effects through property values and municipal budgets. State funding for public universities comes under pressure as fiscal demands grow. Returns average 4-5% instead of 8-9%, which sounds manageable until you account for the 5.5% spending draw and 3% inflation. The endowment is being consumed slowly.'
   },
   severe: {
     name: 'Severe Stress',
@@ -1223,7 +1245,7 @@ const SCENARIOS = {
       { text: 'Correlated asset repricing', type: 'impact' },
       { text: 'Return drag of 5-8%', type: 'impact' }
     ],
-    explain: 'This is FY2009 extended and broadened. Instead of a single-sector financial crisis lasting 18 months, multiple physical triggers create correlated stress across asset classes simultaneously. Insurance retreat triggers property devaluation, which triggers credit tightening, which triggers fiscal stress. Each step amplifies the next. Returns hover near zero, but the spending policy continues to draw down capital. The endowment enters a structural decline.'
+    explain: '<strong>This is FY2009 extended and broadened.</strong> Instead of a single-sector financial crisis lasting 18 months, multiple physical triggers create correlated stress across asset classes simultaneously. Insurance retreat triggers property devaluation, which triggers credit tightening, which triggers fiscal stress. Each step amplifies the next. Returns hover near zero, but the spending policy continues to draw down capital. The endowment enters a structural decline.'
   },
   breakdown: {
     name: 'Structural Breakdown',
@@ -1241,7 +1263,7 @@ const SCENARIOS = {
       { text: 'Liquidity crisis', type: 'impact' },
       { text: 'Sustained negative returns', type: 'impact' }
     ],
-    explain: 'This is the scenario that institutional risk assessors are beginning to publish about but that portfolio construction has not yet adapted to. The NGFS tail-risk scenarios (50% GDP decline), Norway\'s warning about severe model underestimation, and the Federal Reserve\'s projection of mortgage market withdrawal all describe pieces of this picture. Institutional failure amplifies physical risk. The systems that underpin asset values, courts, currencies, insurance, liquid markets, degrade simultaneously. The endowment loses both value and functionality.'
+    explain: '<strong>This is the scenario that institutional risk assessors are beginning to publish about, but that portfolio construction has not yet adapted to.</strong> The NGFS tail-risk scenarios (50% GDP decline), Norway\'s warning about severe model underestimation, and the Federal Reserve\'s projection of mortgage market withdrawal all describe pieces of this picture. Institutional failure amplifies physical risk. The systems that underpin asset values, courts, currencies, insurance, liquid markets, degrade simultaneously. The endowment loses both value and functionality.'
   }
 };
 
